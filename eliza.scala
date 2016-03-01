@@ -115,6 +115,8 @@ object eliza
 				var userInputTokens = userInput.split(separator)
 				var index = 0
 				var location = ""
+				var locationIndex = 0;
+
 				// see if any of the keywords is contained in userInput
 				var k = 0
 				breakable
@@ -126,37 +128,51 @@ object eliza
 						var result = pattern findFirstIn(userInput)
 						if (result != None)
 						{
+							// get the input from the option
 							location = result.get
 
-							var locationIndex = userInput.indexOfSlice(location)
+							// store the index of the match
+							//locationIndex = userInput.indexOfSlice(location)
+
+							var start = userInput.indexOfSlice(location)
+							var length = keywords(k).length()
+							locationIndex = start + length
 
 							index = k
-
-							println(location)
-							println(locationIndex)
 							break
 						}
 
 					}
 				}
 
-				println(location)
+				// index = index of keyword
+				println("index: " + index)
+
+				// location = keyword string
+				println("location: " + location)
+
+				// locationIndex = index of the keyword inside input
+				println("locationIndex: " + locationIndex)
+
+
 				// build eliza's response
 				var baseResponse = responses(index)(0)
 				//println(baseResponse)
 				
 				// calculate the length of the baseResponse
 				var baseLength = baseResponse.length()
+
+				// check whether our string has a * at the end
 				if (baseResponse.charAt(baseLength - 1) != '*')
 				{
 					var reply = baseResponse
-					println(reply)
+					println("raw reply: " + reply)
 				}
 				else 
 				{
 					// if we have a *, fill in the remaining with the user input
 					var reply = baseResponse.substring(0, baseResponse.length() - 1)
-					println(reply)
+					println("raw reply: " + reply)
 					println("Now processing")
 
 
