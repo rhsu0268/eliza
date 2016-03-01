@@ -1,5 +1,6 @@
 import util.control.Breaks._
 import scala.io.StdIn.{readLine, readInt}
+import scala.util.matching.Regex
 
 object eliza
 {
@@ -78,6 +79,11 @@ object eliza
 		println("HI! I'M ELIZA. WHAT'S YOUR PROBLEM?")
 	}
 
+	def show(x: Option[String]) = x match {
+      case Some(s) => s
+      case None => "?"
+   	}
+
 	def main(args: Array[String])
 	{
 		/*
@@ -89,7 +95,6 @@ object eliza
 
 
 		print_introduction
-		println(responses(0))
 
 		var keepLooping = true
 		
@@ -106,21 +111,38 @@ object eliza
 					break
 				}
 
+				// break the string into tokens
+				var userInputTokens = userInput.split(separator)
+				var index = 0
+				var location = ""
 				// see if any of the keywords is contained in userInput
 				var k = 0
-				for (k <- 1 until 37)
+				breakable
 				{
-					if (keywords(k) == userInput)
+					for (k <- 0 until 37)
 					{
-						var location = keywords(k)
-					    println(keywords(k))
-					    println( "k is " + k)
-						break
+
+						var pattern = keywords(k).r
+						var result = pattern findFirstIn(userInput)
+						if (result != None)
+						{
+							location = result.get
+
+							var locationIndex = userInput.indexOfSlice(location)
+
+							index = k
+
+							println(location)
+							println(locationIndex)
+							break
+						}
+
 					}
 				}
 
+				println(location)
 				// build eliza's response
-				var baseResponse = responses(k)(0)
+				var baseResponse = responses(index)(0)
 				//println(baseResponse)
 				
 				// calculate the length of the baseResponse
