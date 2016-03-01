@@ -175,9 +175,14 @@ object eliza
 					println("raw reply: " + reply)
 					println("Now processing")
 
+					// get the substring without keywords
+					var newInput = userInput.substring(locationIndex + 1, userInput.length())
 
+					// seperate it into tokens
 					// now add in the rest of the user input
-					var tokens = userInput.split(separator)
+					var tokens = newInput.split(separator)
+
+					println(tokens(0))
 
 					println(tokens.length)
 					println("tokens: " + tokens(0))
