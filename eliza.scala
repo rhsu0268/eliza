@@ -4,8 +4,8 @@ import scala.util.matching.Regex
 
 object eliza
 {
-	val keywords = Array("CAN YOU", "CAN I", "YOU ARE", "YOU'RE", "I DON'T", "I FEEL", 
-	"WHY DON'T YOU", "WHY CAN'T I", "ARE YOU", "I CAN'T", "I AM", "I'M ", "YOU ",
+	val keywords = Array("CAN YOU", "CAN I", "YOU ARE", "YOURE", "I DONT", "I FEEL", 
+	"WHY DONT YOU", "WHY CANT I", "ARE YOU", "I CANT", "I AM", "IM ", "YOU ",
 	"I WANT", "WHAT", "HOW", "WHO", "WHERE", "WHEN", "WHY", "NAME", "CAUSE", "SORRY",
 	"DREAM", "HELLO", "HI ", "MAYBE", " NO", "YOUR", "ALWAYS", "THINK", "ALIKE", 
 	"YES", "FRIEND", "COMPUTER", "CAR", "NOKEYFOUND")
@@ -16,16 +16,16 @@ object eliza
     	List("WERE", "WAS"),
     	List("YOU","I"),
     	List("YOUR", "MY"),
-    	List("IVE", "YOU'VE"),
-    	List("IM", "YOU'RE"),
+    	List("IVE", "YOUVE"),
+    	List("IM", "YOURE"),
     	List("YOU", "ME"),
     	List("ME", "YOU"),
     	List("AM","ARE"),
     	List("WAS", "WERE"),
     	List("I","YOU"),
     	List("MY", "YOUR"),
-    	List("YOUVE", "I'VE"),
-    	List("YOURE", "I'M")
+    	List("YOUVE", "IVE"),
+    	List("YOURE", "IM")
 
 	)
 
@@ -118,6 +118,7 @@ object eliza
 
 				if (userInput == "BYE")
 				{
+					println("THANKS FOR VISITING ME! PLEASE COME AGAIN!")
 					break
 				}
 
@@ -146,7 +147,7 @@ object eliza
 
 							var start = userInput.indexOfSlice(location)
 							var length = keywords(k).length()
-							locationIndex = start + length
+							locationIndex = start + length + 1
 
 							index = k
 							break
@@ -176,26 +177,35 @@ object eliza
 				if (baseResponse.charAt(baseLength - 1) != '*')
 				{
 					var reply = baseResponse
-					println("raw reply: " + reply)
+					println("Final reply: " + reply)
 				}
 				else 
 				{
 					// if we have a *, fill in the remaining with the user input
 					var reply = baseResponse.substring(0, baseResponse.length() - 1)
 					println("raw reply: " + reply)
-					println("Now processing")
+					println("Now processing...")
 
 					// get the substring without keywords
-					var newInput = userInput.substring(locationIndex + 1, userInput.length())
+					var newInput = userInput.substring(locationIndex, userInput.length())
 
+					if (newInput.length() == 0)
+					{
+						newInput = "..."
+					}
+					
+
+					println("New Input: " + newInput)
 					// seperate it into tokens
 					// now add in the rest of the user input
 					var tokens = newInput.split(separator)
 
 					println(tokens(0))
 
-					//println(tokens.length)
-					//println("tokens: " + tokens(0))
+					for (z <- 0 until tokens.length)
+					{
+						println("Token z: " + tokens(z))
+					}
 
 					var token = ""
 
@@ -233,7 +243,7 @@ object eliza
 					whichReply(index) = 0
 				}
 
-				break
+				
 
 	
 			}
