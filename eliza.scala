@@ -104,6 +104,10 @@ object eliza
 			whichReply(i) = 0
 		}
 
+		// store the user's last input
+		var lastInput = ""
+
+		// print Eliza's welcome message
 		print_introduction
 
 		var keepLooping = true
@@ -186,12 +190,16 @@ object eliza
 					println("raw reply: " + reply)
 					println("Now processing...")
 
-					// get the substring without keywords
-					var newInput = userInput.substring(locationIndex, userInput.length())
+					var newInput = ""
 
-					if (newInput.length() == 0)
+					if (userInput.length() < locationIndex)
 					{
-						newInput = "..."
+						//newInput = "..."
+						newInput = lastInput
+					}
+					else
+					{
+						newInput = userInput.substring(locationIndex, userInput.length())
 					}
 					
 
@@ -199,6 +207,13 @@ object eliza
 					// seperate it into tokens
 					// now add in the rest of the user input
 					var tokens = newInput.split(separator)
+					/*
+					if (tokens.length == 0)
+					{
+						//tokens = Array("...")
+						//tokens = lastInput
+					}
+					*/
 
 					println(tokens(0))
 
@@ -219,7 +234,7 @@ object eliza
 							{
 								println(token)
 								token = swaps(j)(1)
-								break
+								//break
 							}
 						}
 
@@ -236,6 +251,9 @@ object eliza
 
 				// increment the index of the reply so we have a different reply next time
 				whichReply(index) += 1
+
+				// store the reply in case if user enters keywords only
+				lastInput = userInput
 
 				// reset the index to 0 if we hit the number of responses for that keyword
 				if (whichReply(index) >= responsesPerKeyword(index))
