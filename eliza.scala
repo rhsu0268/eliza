@@ -29,7 +29,7 @@ object eliza
 
 	)
 
-	val responsesPerKeywords = Array( 
+	val responsesPerKeyword = Array( 
 		3, 2, 4, 4, 4, 3,
        	3, 2, 3, 3, 4, 4,
        	3, 5, 9, 9, 9, 9,
@@ -166,7 +166,7 @@ object eliza
 
 
 				// build eliza's response
-				var baseResponse = responses(index)(0)
+				var baseResponse = responses(index)(whichReply(index))
 				//println(baseResponse)
 				
 				// calculate the length of the baseResponse
@@ -224,6 +224,14 @@ object eliza
 					println("Final reply: " + reply)
 				}
 
+				// increment the index of the reply so we have a different reply next time
+				whichReply(index) += 1
+
+				// reset the index to 0 if we hit the number of responses for that keyword
+				if (whichReply(index) >= responsesPerKeyword(index))
+				{
+					whichReply(index) = 0
+				}
 
 				break
 
