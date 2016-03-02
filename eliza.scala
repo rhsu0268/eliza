@@ -29,6 +29,15 @@ object eliza
 
 	)
 
+	val responsesPerKeywords = Array( 
+		3, 2, 4, 4, 4, 3,
+       	3, 2, 3, 3, 4, 4,
+       	3, 5, 9, 9, 9, 9,
+    	9, 9, 2, 4, 4, 4,
+    	1, 1, 5, 5, 2, 4,
+    	3, 7, 3, 6, 7, 5,
+    	6)
+
 	//var responses = Array.ofDim[String](37, 9)
 	val responses = List(
 		List("DON'T YOU BELIEVE THAT I CAN*", "PERHAPS YOU WOULD LIKE TO BE ABLE TO*", "YOU WANT ME TO BE ABLE TO*"),
@@ -86,13 +95,14 @@ object eliza
 
 	def main(args: Array[String])
 	{
-		/*
-		for (keyword <- keywords)
-		{
-			println(keyword)
-		}
-		*/
+		// declare an array to keep track of the index of the reply
+		val whichReply = new Array[Int](37)
 
+		// use the first reply for each keyword match the first time the keyword is seen
+		for (i <- 0 until 37)
+		{
+			whichReply(i) = 0
+		}
 
 		print_introduction
 
@@ -184,33 +194,34 @@ object eliza
 
 					println(tokens(0))
 
-					println(tokens.length)
-					println("tokens: " + tokens(0))
+					//println(tokens.length)
+					//println("tokens: " + tokens(0))
 
 					var token = ""
 
 					var count = 0
 					while (count < tokens.length)
 					{
+						token = tokens(count)
 						for (j <- 0 until 14)
 						{
-							//println("j" + j)
-							//println("swaps" + swaps(j)(tokenCount))
-		
-							if (swaps(j)(0) == tokens(count))
+							if (swaps(j)(0) == token)
 							{
+								println(token)
 								token = swaps(j)(1)
 								break
 							}
 						}
 
 						// append a space and the token
+						println("Appending space and token: " + reply)
 						reply += " "
-						reply += token
+						reply += token 
 						count += 1
 						//println("count" + count)
 					}
-					printf("reply" + reply)
+					reply += "?"
+					println("Final reply: " + reply)
 				}
 
 
