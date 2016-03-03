@@ -83,8 +83,10 @@ object eliza
 	val separator = " "
 	def print_introduction() : Unit = 
 	{
+		println("\n\n")
 		println("*** ELIZA ***")
 		println("To stop Eliza, type 'bye'")
+		println("\n\n")
 		println("HI! I'M ELIZA. WHAT'S YOUR PROBLEM?")
 	}
 
@@ -107,6 +109,10 @@ object eliza
 		// store the user's last input
 		var lastInput = ""
 
+		var secondLastInput = ""
+
+		var numberOfExchanges = 0
+
 		// print Eliza's welcome message
 		print_introduction
 
@@ -128,7 +134,7 @@ object eliza
 
 				// break the string into tokens
 				var userInputTokens = userInput.split(separator)
-				var index = 0
+				var index = 36
 				var location = ""
 				var locationIndex = 0;
 
@@ -191,11 +197,13 @@ object eliza
 					println("Now processing...")
 
 					var newInput = ""
+					var followUp = false
 
 					if (userInput.length() < locationIndex)
 					{
 						//newInput = "..."
-						newInput = lastInput
+						newInput = secondLastInput
+						followUp = true
 					}
 					else
 					{
@@ -214,7 +222,12 @@ object eliza
 						//tokens = lastInput
 					}
 					*/
+					if (followUp == true)
+					{
+						tokens = Array(tokens(tokens.length - 1))
 
+					}
+					
 					println(tokens(0))
 
 					for (z <- 0 until tokens.length)
@@ -245,6 +258,7 @@ object eliza
 						count += 1
 						//println("count" + count)
 					}
+					
 					reply += "?"
 					println("Final reply: " + reply)
 				}
@@ -252,8 +266,17 @@ object eliza
 				// increment the index of the reply so we have a different reply next time
 				whichReply(index) += 1
 
-				// store the reply in case if user enters keywords only
-				lastInput = userInput
+				numberOfExchanges += 1
+				if (numberOfExchanges > 1)
+				{
+					secondLastInput = lastInput
+					lastInput = userInput
+				}	
+				else 
+				{
+					// store the reply in case if user enters keywords only
+					lastInput = userInput
+				}
 
 				// reset the index to 0 if we hit the number of responses for that keyword
 				if (whichReply(index) >= responsesPerKeyword(index))
@@ -261,7 +284,7 @@ object eliza
 					whichReply(index) = 0
 				}
 
-				
+
 
 	
 			}
