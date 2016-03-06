@@ -187,13 +187,13 @@ object eliza
 				}
 
 				// index = index of keyword
-				println("index: " + index)
+				//println("index: " + index)
 
 				// location = keyword string
-				println("location: " + location)
+				//println("location: " + location)
 
 				// locationIndex = index of the keyword inside input
-				println("locationIndex: " + locationIndex)
+				//println("locationIndex: " + locationIndex)
 
 
 				// build eliza's response
