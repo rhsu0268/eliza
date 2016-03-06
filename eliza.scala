@@ -1,9 +1,20 @@
+/*
+ *
+ * Name: eliza.scala
+ * Author: Richard Hsu 
+ *
+ * Overview: This is a program that simulates eliza, a program 
+ * that can psychoanalyze the user based on his or her input. 
+ * 
+ */
+
 import util.control.Breaks._
 import scala.io.StdIn.{readLine, readInt}
 import scala.util.matching.Regex
 
 object eliza
 {
+	// create an array to store possible keywords the user may type in
 	val keywords = Array("CAN YOU", "CAN I", "YOU ARE", "YOURE", "I DONT", "I FEEL", 
 	"WHY DONT YOU", "WHY CANT I", "ARE YOU", "I CANT", "I AM", "IM ", "YOU ",
 	"I WANT", "WHAT", "HOW", "WHO", "WHERE", "WHEN", "WHY", "NAME", "CAUSE", "SORRY",
@@ -11,6 +22,7 @@ object eliza
 	"YES", "FRIEND", "COMPUTER", "CAR", "NOKEYFOUND")
 
 
+	// create a list of list of pronouns for processing
 	val swaps = List(
 		List("ARE","AM"),
     	List("WERE", "WAS"),
@@ -29,6 +41,7 @@ object eliza
 
 	)
 
+	// create an array to keep track of the number of responses per keyword 
 	val responsesPerKeyword = Array( 
 		3, 2, 4, 4, 4, 3,
        	3, 2, 3, 3, 4, 4,
@@ -38,7 +51,7 @@ object eliza
     	3, 7, 3, 6, 7, 5,
     	6)
 
-	//var responses = Array.ofDim[String](37, 9)
+	// create a list of all possible responses 
 	val responses = List(
 		List("DON'T YOU BELIEVE THAT I CAN*", "PERHAPS YOU WOULD LIKE TO BE ABLE TO*", "YOU WANT ME TO BE ABLE TO*"),
 		List( "PERHAPS YOU DON'T WANT TO*", "DO YOU WANT TO BE ABLE TO*"),
@@ -81,6 +94,8 @@ object eliza
 		)
 
 	val separator = " "
+
+	// this is a function that starts the therapy session
 	def print_introduction() : Unit = 
 	{
 		println("\n\n")
@@ -90,6 +105,7 @@ object eliza
 		println("HI! I'M ELIZA. WHAT'S YOUR PROBLEM?")
 	}
 
+	// this is a function that unwraps an option - later not used 
 	def show(x: Option[String]) = x match {
       case Some(s) => s
       case None => "?"
@@ -106,11 +122,13 @@ object eliza
 			whichReply(i) = 0
 		}
 
-		// store the user's last input
+		// create a variable user's last input
 		var lastInput = ""
 
+		// create a variable for the user's second to last input 
 		var secondLastInput = ""
 
+		// keep track of the number of exchanges between user and eliza
 		var numberOfExchanges = 0
 
 		// print Eliza's welcome message
@@ -123,9 +141,11 @@ object eliza
 		{
 			while (keepLooping)
 			{
+				// get the user's input
 				var userInput = readLine()
 				userInput = userInput.toUpperCase()
 
+				// check if it's equal to bye
 				if (userInput == "BYE")
 				{
 					println("THANKS FOR VISITING ME! PLEASE COME AGAIN!")
@@ -266,7 +286,10 @@ object eliza
 				// increment the index of the reply so we have a different reply next time
 				whichReply(index) += 1
 
+				// incrmeent the number of exchanges
 				numberOfExchanges += 1
+
+				// if it is larger than 1, store the second to last input for good measure
 				if (numberOfExchanges > 1)
 				{
 					secondLastInput = lastInput
