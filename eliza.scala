@@ -213,8 +213,8 @@ object eliza
 				{
 					// if we have a *, fill in the remaining with the user input
 					var reply = baseResponse.substring(0, baseResponse.length() - 1)
-					println("raw reply: " + reply)
-					println("Now processing...")
+					//println("raw reply: " + reply)
+					//println("Now processing...")
 
 					var newInput = ""
 					var followUp = false
@@ -231,7 +231,8 @@ object eliza
 					}
 					
 
-					println("New Input: " + newInput)
+					//println("New Input: " + newInput)
+					
 					// seperate it into tokens
 					// now add in the rest of the user input
 					var tokens = newInput.split(separator)
@@ -248,12 +249,14 @@ object eliza
 
 					}
 					
-					println(tokens(0))
+					//println(tokens(0))
 
+					/*
 					for (z <- 0 until tokens.length)
 					{
 						println("Token z: " + tokens(z))
 					}
+					*/
 
 					var token = ""
 
@@ -272,7 +275,7 @@ object eliza
 						}
 
 						// append a space and the token
-						println("Appending space and token: " + reply)
+						//println("Appending space and token: " + reply)
 						reply += " "
 						reply += token 
 						count += 1
