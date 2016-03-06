@@ -13,7 +13,7 @@ If you do not have Scala installed, visit the Scala website to set that up via t
 
 <http://www.scala-lang.org/download/>
 
-You have three options in running the program:
+You have three options in environment:
 
 1. Lightbend Activator: Browser-based command line Tool
 2. Scala IDEs: Eclipse, IntelliJ, or NetBeans
