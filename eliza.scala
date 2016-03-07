@@ -1,6 +1,6 @@
 /*
  *
- * Name: eliza.scala
+ * Name: Eliza.scala
  * Author: Richard Hsu 
  *
  * Overview: This is a program that simulates eliza, a program 
@@ -12,7 +12,7 @@ import util.control.Breaks._
 import scala.io.StdIn.{readLine, readInt}
 import scala.util.matching.Regex
 
-object eliza
+object Eliza
 {
 	// create an array to store possible keywords the user may type in
 	val keywords = Array("CAN YOU", "CAN I", "YOU ARE", "YOURE", "I DONT", "I FEEL", 
